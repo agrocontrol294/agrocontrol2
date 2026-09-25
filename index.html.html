@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agrocontrol | Portal y Administración</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7f2;color:#263326}
+header{background:#fff;padding:18px 30px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.logo{height:85px;max-width:270px;object-fit:contain}
+.container{max-width:1100px;margin:35px auto;padding:20px}
+.menu{display:flex;gap:20px;justify-content:center;margin-bottom:30px}
+.menu button{border:0;background:#2e6b3d;color:#fff;padding:16px 30px;border-radius:10px;font-size:17px;cursor:pointer}
+.menu button:hover{background:#245631}
+.panel{display:none;background:#fff;padding:30px;border-radius:14px;box-shadow:0 3px 15px rgba(0,0,0,.08)}
+.panel.active{display:block}
+h2{color:#2e6b3d;margin-top:0}h3{color:#3d6546}
+input,select{width:100%;padding:12px;margin:7px 0 15px;border:1px solid #ccd5cc;border-radius:8px;font-size:15px}
+button.action{background:#2e6b3d;color:#fff;border:0;padding:12px 20px;border-radius:8px;cursor:pointer;font-size:15px}
+button.action:hover{background:#245631}
+hr{border:0;border-top:1px solid #ddd;margin:30px 0}
+.card{background:#f7faf6;padding:20px;border-radius:12px;margin-top:20px}
+.progress{height:18px;background:#dfe7df;border-radius:20px;overflow:hidden;margin:12px 0}
+.progress-bar{height:100%;background:#4c9a5d;width:0}
+table{width:100%;border-collapse:collapse;margin-top:20px}
+th,td{border-bottom:1px solid #ddd;padding:12px 8px;text-align:left}
+th{background:#eef4ed;color:#2e6b3d}
+.success{color:#2e7d32;font-weight:bold}.warning{color:#b36b00;font-weight:bold}
+.section-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:15px;margin-top:20px}
+.section-card{background:#fff;border:1px solid #dbe6da;border-radius:12px;padding:22px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.section-card strong{display:block;color:#2e6b3d;font-size:18px;margin-bottom:9px}
+.section-card .icon{font-size:32px;margin-bottom:8px}
+.small{color:#6d766d;font-size:13px}
+footer{text-align:center;padding:25px;color:#777;font-size:13px}
+@media(max-width:700px){header{justify-content:center}.logo{height:75px;max-width:230px}.menu{flex-direction:column}}
+</style>
+</head>
+<body>
+
+<header>
+  <img class="logo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wgARCAD7AfgDASIAAhEBAxEB/8QAGgABAAIDAQAAAAAAAAAAAAAAAAMEAQIFBv/EABcBAQEBAQAAAAAAAAAAAAAAAAABAgP/2gAMAwEAAhADEAAAAu+EAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMQJY1qY3i2qEt5plu5o7S3FfeWVjM0AAAAAAAAAAAAAAAAAAAAAAAAxmukeqfpyiklimt8walnFfKTaY2WPWzsVJJIrJpaO0txDLjpkAAAAAAAAAAAAAAAAAAAAACpbq6zmTMaQ72diuscOa62ILxX0tkpYvR6zBLrElqGKYhzZiJJaO622m+OgAAAAAAAAAAAAAAAAAAACGbBpvFMgLr5PucQt+i8d6wlAAxkRQXFzRm3r7xYgWJa1iOK5vK9jn1BQAAAAAAAAAAAAAAAAAANNs4Mlc4PZ43pjx3ZpQnq2MgAADGRWivQb5kE6QS7QWXc17HPqCgAAAAAAAAAAAAAAAAAAOH2vKnX6nGsmnB9V5g9De876IU6HOL2nWtnn4/SDzlu1xz0wIa96vrnnENqqlqDFzdYzz7AAAAAAAAAAAAAAAAAAAc2jD2S6B5/wBBTPNdnih6XgesAAFK6AGMilvtD042K9ynLPNWtZ2E0AAAAAAAAAAAAAAAABryuuPHeosgBjI8hp67yJd9L5n0wAAAABDXmj6crVS3Tl3t17GdBNAAAAAAAAAAAAAAAAAAAAAPIev4RzfXeO7x1AADU2NDbTGtzDZ10saSzDJnYAAAAAAAAAAAAAAAAAAAAACOQeWg9bxDoXvIWz0jkDr8mnk9BkMY2GuwAAAAAAAAAAAAAAAAAAAAHB65O4+p2nKqHoFPmnecvU6ziznRrcvoBpEXLPAnO08/Idxz+eegUdDogAAAAAAAAAAAAAAAAAAVbXBIehSnNd6u5rJHkdajCab2eeem890+OdCrpKV7O8xX6nH6Zx99rRU6HL3NuhTwd0AAAAAAAAAAAAAAAAAADXYYZEW+w1bDEUwRSjXWQathhka5yMY2EaQa43AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH/2gAMAwEAAgADAAAAIffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffV2Y4okdffffffffffffffffffffffffb4mVMQLEIRvfffffffffffffffffffffUMcvOEhbiWhXffffffffffffffffffffYk/abfffU1IAc/fffffffffffffffffffWOeWffffaRYy4/fffffffffffffffffffeecfZfeTfQ5ItfffffffffffffffffffXfef8AH33301avv3333333333333333313323d333332Dir33333333333333333333310n33mXHpI333333333333333333333333VXHW02333333333333333333333Hn3n2kUl3X3H3333333333333333332102UUlknkUE8H3333333333333333332200330102033333333333333333333333333333333333333333333333/2gAMAwEAAgADAAAAEAwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww7wAknhywwwwwwwwwwwwwwwwwwwwwwwwxhiIh9grIuAwwwwwwwwwwwwwwwwwwwww7Mqsilll38wKgwwwwwwwwwwwwwwwwwww3Lg18ww04OYgwgwwwwwwwwwwwwwwwwwww5x71ywwwx5aUNgwwwwwwwwwwwwwwwwwwwxy662yw5w67oQwwwwwwwwwwwwwwwwwww7w1wRwwww86btAwwwwwwwwwwwwwwwwwwwww4Qwwwww7DQgwwwwwwwwwwwwwwwwwwwww14www1oPPsgwwwwwwwwwwwwwwwwwwwww095zy04sAwwwwwwwwwwwwwwwwwwwywxyz1212yzywwwwwwwwwwwwwwwwwwwxxxy0/2/+080Vwwwwwwwwwwwwwwwwwww0w48008w80884wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww//E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" alt="Agrocontrol">
+</header>
+
+<div class="container">
+  <div class="menu">
+    <button onclick="show('cliente')">Portal Cliente</button>
+    <button onclick="show('admin')">Administración</button>
+  </div>
+
+  <div id="cliente" class="panel">
+    <h2>Portal Cliente</h2>
+    <p>Ingresá tu código de cliente:</p>
+    <input id="codigoCliente" type="text" placeholder="Ejemplo: JP-001">
+    <button class="action" onclick="buscarCliente()">Ingresar</button>
+    <div id="clienteResultado"></div>
+  </div>
+
+  <div id="admin" class="panel">
+    <h2>Panel de Administración</h2>
+    <p>Acá vas a poder gestionar clientes y sumar hectáreas.</p>
+
+    <div class="card">
+      <h3>Agregar nuevo cliente</h3>
+      <label>Nombre del cliente</label>
+      <input id="nuevoNombre" type="text" placeholder="Ejemplo: Juan Pérez">
+      <label>Código</label>
+      <input id="nuevoCodigo" type="text" placeholder="Ejemplo: JP-001">
+      <label>Hectáreas iniciales</label>
+      <input id="nuevasHa" type="number" min="0" step="0.1" placeholder="Ejemplo: 420">
+      <button class="action" onclick="agregarCliente()">➕ Cargar cliente</button>
+    </div>
+
+    <hr>
+
+    <div class="card">
+      <h3>Sumar hectáreas a un cliente</h3>
+      <label>Cliente</label>
+      <select id="clienteSelect"></select>
+      <label>Hectáreas a sumar</label>
+      <input id="haSumar" type="number" min="0" step="0.1" placeholder="Ejemplo: 50">
+      <button class="action" onclick="sumarHa()">Cargar</button>
+    </div>
+
+    <div class="card">
+      <h3>Clientes</h3>
+      <table>
+        <thead><tr><th>Cliente</th><th>Código</th><th>Ha</th><th>Progreso</th><th>Estado</th></tr></thead>
+        <tbody id="tablaClientes"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<footer>Agrocontrol — Gestión agrícola</footer>
+
+<script>
+const iniciales=[
+  {nombre:"Juan Pérez",codigo:"JP-001",ha:420},
+  {nombre:"Cliente 2",codigo:"AC-002",ha:275},
+  {nombre:"Cliente 3",codigo:"AC-003",ha:510}
+];
+
+let guardados=null;
+try{guardados=JSON.parse(localStorage.getItem("agrocontrol_clientes")||"null")}catch(e){}
+let clientes=Array.isArray(guardados)&&guardados.length?guardados:iniciales;
+
+function guardar(){localStorage.setItem("agrocontrol_clientes",JSON.stringify(clientes))}
+
+function show(id){
+  document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  if(id==="admin")render();
+}
+
+function render(){
+  const s=document.getElementById("clienteSelect");
+  const t=document.getElementById("tablaClientes");
+  s.innerHTML=""; t.innerHTML="";
+  clientes.forEach((c,i)=>{
+    let o=document.createElement("option");
+    o.value=i;o.textContent=c.nombre+" — "+c.codigo;s.appendChild(o);
+    let p=Math.min(100,c.ha/5);
+    let estado=c.ha>=500?'<span class="success">Objetivo cumplido</span>':'<span class="warning">En progreso</span>';
+    t.innerHTML+=`<tr><td>${c.nombre}</td><td>${c.codigo}</td><td>${Number(c.ha).toFixed(1)} ha</td><td>${Math.round(p)}%</td><td>${estado}</td></tr>`;
+  });
+}
+
+function agregarCliente(){
+  let nombre=document.getElementById("nuevoNombre").value.trim();
+  let codigo=document.getElementById("nuevoCodigo").value.trim().toUpperCase();
+  let ha=Number(document.getElementById("nuevasHa").value);
+  if(!nombre||!codigo){alert("Completá el nombre y el código.");return}
+  if(!Number.isFinite(ha)||ha<0){alert("Ingresá una cantidad válida.");return}
+  if(clientes.some(c=>c.codigo.toUpperCase()===codigo)){alert("Ese código ya existe.");return}
+  clientes.push({nombre,codigo,ha});guardar();render();
+  document.getElementById("nuevoNombre").value="";
+  document.getElementById("nuevoCodigo").value="";
+  document.getElementById("nuevasHa").value="";
+  alert("Cliente cargado correctamente.");
+}
+
+function sumarHa(){
+  let i=Number(document.getElementById("clienteSelect").value);
+  let v=Number(document.getElementById("haSumar").value);
+  if(!Number.isFinite(v)||v<=0){alert("Ingresá una cantidad válida.");return}
+  if(!clientes[i])return;
+  clientes[i].ha=Number(clientes[i].ha)+v;guardar();render();
+  document.getElementById("haSumar").value="";
+  alert("Hectáreas cargadas correctamente.");
+}
+
+function buscarCliente(){
+  let codigo=document.getElementById("codigoCliente").value.trim().toUpperCase();
+  let r=document.getElementById("clienteResultado");
+  let c=clientes.find(x=>x.codigo.toUpperCase()===codigo);
+
+  if(!c){
+    r.innerHTML='<div class="card"><p class="warning">No encontramos un cliente con ese código.</p></div>';
+    return;
+  }
+
+  let faltan=Math.max(0,500-c.ha);
+  let p=Math.min(100,c.ha/5);
+
+  r.innerHTML=`
+    <div class="card">
+      <h3>Hola, ${c.nombre}</h3>
+      <p><strong>Hectáreas acumuladas:</strong> ${Number(c.ha).toFixed(1)} ha</p>
+      <p><strong>Objetivo:</strong> 500 ha</p>
+      <p><strong>Faltan:</strong> ${faltan.toFixed(1)} ha</p>
+      <div class="progress"><div class="progress-bar" style="width:${p}%"></div></div>
+      <p><strong>Progreso:</strong> ${Math.round(p)}%</p>
+      <p><strong>Estado:</strong> ${c.ha>=500?'<span class="success">Objetivo cumplido</span>':'<span class="warning">En progreso</span>'}</p>
+
+      <h3>Servicios e Insumos</h3>
+      <div class="section-grid">
+        <div class="section-card">
+          <div class="icon">🚜</div>
+          <strong>Servicios</strong>
+          <span class="small">Servicios contratados y realizados</span>
+        </div>
+        <div class="section-card">
+          <div class="icon">🧪</div>
+          <strong>Insumos</strong>
+          <span class="small">Insumos utilizados y disponibles</span>
+        </div>
+        <div class="section-card">
+          <div class="icon">📍</div>
+          <strong>Monitoreo</strong>
+          <span class="small">Monitoreos del campo</span>
+        </div>
+        <div class="section-card">
+          <div class="icon">🛰️</div>
+          <strong>Aplicaciones</strong>
+          <span class="small">Aplicaciones realizadas</span>
+        </div>
+      </div>
+    </div>`;
+}
+
+render();
+</script>
+</body>
+</html>
